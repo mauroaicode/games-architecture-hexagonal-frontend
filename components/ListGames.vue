@@ -18,7 +18,7 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-10" v-if="games.length > 0">
         <CardGame :game="game" v-for="(game, index) in games" :key="index"/>
       </div>
-      <div v-else class="flex h-64 justify-center items-center">
+      <div v-if="$store.state.game.dataLoading" class="flex h-64 justify-center items-center">
         <h4 class="text-3xl text-gray-400">No hay juegos 😟</h4>
       </div>
     </div>
@@ -30,7 +30,6 @@ import FormGame from "./FormGame";
 import {cloneDeep} from 'lodash'
 export default {
   name: "ListGames",
-
   computed:{
     games(){
       return cloneDeep(this.$store.getters['game/listGames'])

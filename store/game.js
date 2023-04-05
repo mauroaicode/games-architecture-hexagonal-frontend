@@ -1,11 +1,14 @@
 export const state = () => ({
   games: [],
+  dataLoading: false
 })
 
 export const mutations = {
   setGames(state, data) {
-    if (data) {
+    if (data.length > 0) {
       state.games = data
+    }else{
+      state.dataLoading = true
     }
   },
   setGame(state, data) {
@@ -38,12 +41,13 @@ export const getters = {
   listGames: state => state.games
 }
 export const actions = {
-  getGames({commit}) {
+  getGames({commit, state}) {
     this.$axios.$get('/api/games').then(resp => {
       commit('setGames', resp.data)
     }).catch(e => {
       console.log('ERROR ', e)
       this.$toast.error('Error al obtener los juegos.');
+      state.dataLoading = true
     })
   },
   async saveGame({commit, state}, data) {
