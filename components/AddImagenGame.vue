@@ -11,6 +11,7 @@
       v-if="$v.pathImage.$error">
       La imagen es requerida.
     </p>
+
     <div v-if="editGame" class="my-4">
       <h5 class="text-blue-800 hover:text-green-500 cursor-pointer" @click="editImageGame">
         {{ editImage ? 'Cancelar' : 'Cambiar Imagen' }}</h5>

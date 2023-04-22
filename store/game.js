@@ -42,7 +42,7 @@ export const getters = {
 }
 export const actions = {
   getGames({commit, state}) {
-    this.$axios.$get('/api/games').then(resp => {
+    this.$axios.$get('/api/v1/games').then(resp => {
       commit('setGames', resp.data)
     }).catch(e => {
       console.log('ERROR ', e)
@@ -54,7 +54,7 @@ export const actions = {
     let resp
     try {
       resp = await this.$axios.post(
-        '/api/create/game',
+        '/api/v1/create/game',
         data
       )
       if (resp.status === 200) {
@@ -76,7 +76,7 @@ export const actions = {
     let resp
     try {
       resp = await this.$axios.put(
-        `/api/update/game/${data.id}`,
+        `/api/v1/update/game/${data.id}`,
         data
       )
       if (resp.status === 200) {
@@ -98,7 +98,7 @@ export const actions = {
     let resp
     try {
       resp = await this.$axios.delete(
-        `/api/delete/game/${data.id}`)
+        `/api/v1/delete/game/${data.id}`)
       if (resp.status === 200) {
         commit('deleteGame', data)
         this.$toast.success('Juego eliminado exitosamente!');
