@@ -102,7 +102,7 @@
 
       </div>
       <!--  Agregar Imagen   -->
-      <AddImagenGame @dataImage="dataImage" :editGame="editGame" :dataPathImage="form.pathImage" @dataImageUrl="dataImageUrl"/>
+      <AddImagenGame @dataImage="dataImage" :editGame="editGame" :dataPathImage="form.pathImage" :dataPathImageUrl="form.pathImageUrl" @dataImageUrl="dataImageUrl"/>
 
       <!--  Botón agregar y editar juego  -->
       <div>
@@ -170,10 +170,12 @@ export default {
       }
     },
     dataImageUrl(data){
+      console.log(data)
       this.form.pathImageUrl = data
     },
     dataEditGame(data){
       this.form = data
+      this.form.pathImageUrl = data.pathImageUrl === 1
     },
     fcCancelGame(){
       this.$v.form.$reset()

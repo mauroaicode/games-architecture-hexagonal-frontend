@@ -25,19 +25,19 @@
 
     <div class="space-y-5" v-if="editImage || !editGame">
       <div class="flex items-center mb-4">
-        <input checked id="default-radio-1" v-model="pathImageUrl" type="radio" :value="true" name="default-radio"
+        <input checked id="default-radio-1" v-model="pathImageUrl" type="radio" :value="false" name="default-radio"
                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Subir
           Imagen</label>
       </div>
       <div class="flex items-center">
-        <input id="default-radio-2" v-model="pathImageUrl" type="radio" :value="false" name="default-radio"
+        <input id="default-radio-2" v-model="pathImageUrl" type="radio" :value="true" name="default-radio"
                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
         <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Agregar Imagen
           Url</label>
       </div>
 
-      <div v-if="pathImageUrl">
+      <div v-if="!pathImageUrl">
         <UploadPicture @imageRecords="image" :gameId="gameId" v-if="editImage || !editGame" ref="uploadPicture"/>
       </div>
       <div v-else>
@@ -77,7 +77,7 @@ export default {
       pathImage: String()
     }
   },
-  props: ['gameId', 'editGame', 'dataPathImage'],
+  props: ['gameId', 'editGame', 'dataPathImage', 'dataPathImageUrl'],
   validations: {
     pathImage: {required}
   },
@@ -117,8 +117,11 @@ export default {
     })
   },
   watch: {
-    dataPathImage:function (val) {
-      if (this.editGame){
+    editImage: function () {
+      return this.pathImageUrl = this.dataPathImageUrl
+    },
+    dataPathImage: function (val) {
+      if (this.editGame) {
         this.pathImage = val
       }
     },
@@ -136,9 +139,7 @@ export default {
     pathImageUrl: {
       handler(val) {
         setTimeout(() => {
-          if (val) {
-            this.$emit('dataImageUrl', val)
-          }
+          this.$emit('dataImageUrl', val)
         }, 200)
       },
       deep: true
